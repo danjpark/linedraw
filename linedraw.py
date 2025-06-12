@@ -197,9 +197,8 @@ def sketch(path):
             draw.line(l,(0,0,0),5)
         disp.show()
 
-    f = open(export_path,'w')
-    f.write(makesvg(lines))
-    f.close()
+    with open(export_path, 'w') as f:
+        f.write(makesvg(lines))
     print(len(lines),"strokes.")
     print("done.")
     return lines
