@@ -178,7 +178,6 @@ def sketch(path):
         except FileNotFoundError:
             print("The Input File wasn't found. Check Path")
             exit(0)
-            pass
     w,h = IM.size
 
     IM = IM.convert("L")
