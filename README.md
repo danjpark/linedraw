@@ -57,7 +57,7 @@ A simple Flask application is provided to tweak parameters through a GUI.
 Run the web server:
 
 ```bash
-python web/app.py
+python -m web.app
 ```
 
 Open your browser at `http://localhost:5000` and upload an image. The page
