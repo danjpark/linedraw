@@ -204,6 +204,53 @@ def sketch(path):
     return lines
 
 
+def sketch_steps(path, *, output_path=export_path, draw_contours_opt=draw_contours,
+                 draw_hatch_opt=draw_hatch, hatch_size_opt=hatch_size,
+                 contour_simplify_opt=contour_simplify, no_cv_opt=no_cv):
+    """Process image and return drawing lines with intermediate images."""
+    global no_cv
+    no_cv_prev = no_cv
+    no_cv = no_cv_opt
+
+    IM = Image.open(path)
+    orig = IM.copy()
+    w, h = IM.size
+
+    gray = IM.convert("L")
+    contrast = ImageOps.autocontrast(gray, 10)
+
+    lines = []
+    if draw_contours_opt:
+        lines += getcontours(contrast.resize(
+            (resolution // contour_simplify_opt,
+             resolution // contour_simplify_opt * h // w)),
+            contour_simplify_opt)
+    if draw_hatch_opt:
+        lines += hatch(contrast.resize(
+            (resolution // hatch_size_opt,
+             resolution // hatch_size_opt * h // w)),
+            hatch_size_opt)
+
+    lines = sortlines(lines)
+
+    with open(output_path, 'w') as f:
+        f.write(makesvg(lines))
+
+    disp = Image.new("RGB", (resolution, resolution * h // w), (255, 255, 255))
+    draw = ImageDraw.Draw(disp)
+    for l in lines:
+        draw.line(l, (0, 0, 0), 2)
+
+    no_cv = no_cv_prev
+
+    return lines, {
+        'original': orig,
+        'grayscale': gray,
+        'contrast': contrast,
+        'final': disp
+    }
+
+
 def makesvg(lines):
     print("generating svg file...")
     out = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1">'

@@ -50,3 +50,19 @@ linedraw.visualize(lines)                   # simulates plotter behavior
                                             # draw the lines in order using turtle graphics.
 ```
 
+## Web Interface
+
+A simple Flask application is provided to tweak parameters through a GUI.
+
+Run the web server:
+
+```bash
+python web/app.py
+```
+
+Open your browser at `http://localhost:5000` and upload an image. The page
+lets you adjust hatch size and contour simplification with sliders and enables
+or disables hatching/contours. After processing, the intermediate grayscale and
+contrast images along with the final drawing are displayed and the generated SVG
+can be downloaded.
+
