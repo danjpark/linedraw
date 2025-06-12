@@ -85,7 +85,7 @@ class LCG():
         self.c = 1013904223.0   
         self.seed = self.z = None
     def setSeed(self,val=None):
-        self.z = self.seed = (math.random()*self.m if val == None else val) >> 0
+        self.z = self.seed = (random.random()*self.m if val == None else val) >> 0
     def getSeed(self):
         return self.seed
     def rand(self):
@@ -94,10 +94,9 @@ class LCG():
         
     
 def noiseSeed(seed):
+    global perlin
     lcg = LCG()
     lcg.setSeed(seed)
     perlin = []
     for i in range(0,PERLIN_SIZE+1):
         perlin.append(lcg.rand())
-        
-        
