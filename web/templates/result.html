@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Result</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    .images img { max-width: 200px; margin-right: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Result</h1>
+  <div class="images">
+    <img src="/static/{{ steps['original'] }}" alt="original">
+    <img src="/static/{{ steps['grayscale'] }}" alt="grayscale">
+    <img src="/static/{{ steps['contrast'] }}" alt="contrast">
+    <img src="/static/{{ steps['final'] }}" alt="final">
+  </div>
+  <p><a href="/static/{{ svg }}">Download SVG</a></p>
+  <p><a href="/">Process another image</a></p>
+</body>
+</html>
