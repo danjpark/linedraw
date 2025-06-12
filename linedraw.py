@@ -23,19 +23,21 @@ try:
     import cv2
 except:
     print("Cannot import numpy/openCV. Switching to NO_CV mode.")
+    np = None
+    cv2 = None
     no_cv = True
 
 def find_edges(IM):
     print("finding edges...")
-    if no_cv:
-        #appmask(IM,[F_Blur])
-        appmask(IM,[F_SobelX,F_SobelY])
+    if no_cv or np is None or cv2 is None:
+        # use fall back edge detection when dependencies are missing
+        appmask(IM, [F_SobelX, F_SobelY])
     else:
-        im = np.array(IM) 
-        im = cv2.GaussianBlur(im,(3,3),0)
-        im = cv2.Canny(im,100,200)
+        im = np.array(IM)
+        im = cv2.GaussianBlur(im, (3, 3), 0)
+        im = cv2.Canny(im, 100, 200)
         IM = Image.fromarray(im)
-    return IM.point(lambda p: p > 128 and 255)  
+    return IM.point(lambda p: p > 128 and 255)
 
 
 def getdots(IM):
